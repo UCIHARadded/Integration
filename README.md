@@ -70,29 +70,29 @@ Evaluation Pipeline Illustration:
 
 ## 📁 File Structure
 
-Integration-main/
-├── alg/                        # Core domain generalization algorithms
-│   ├── algs/                   # Specific algorithm implementations (e.g. diversify.py)
-│   ├── alg.py                  # Main algorithm controller
-│   └── modelopera.py           # Model operations
-├── datautil/                   # Data loaders, curriculum sorting, clustering
-│   ├── actdata/                # Activity recognition dataset utilities
-│   ├── getcurriculumloader.py
-│   ├── getdataloader_single.py
-│   └── cluster.py              # Clustering logic for domain estimation
-├── loss/                       # Custom loss functions
-│   └── common_loss.py
-├── network/                    # Model architectures
-│   ├── act_network.py          # CNN for activity data
-│   ├── Adver_network.py        # Adversarial components
-│   └── common_network.py       # Base models
-├── utils/                      # Utility functions and argument parsing
-│   ├── params.py
-│   └── util.py
-├── shap_utils.py               # SHAP evaluation metrics
-├── train.py                    # Entry point for training
-├── env.yml                     # Conda environment spec
-└── README.md                   # This file
+                Integration-main/
+                ├── alg/                        # Core domain generalization algorithms
+                │   ├── algs/                   # Specific algorithm implementations (e.g. diversify.py)
+                │   ├── alg.py                  # Main algorithm controller
+                │   └── modelopera.py           # Model operations
+                ├── datautil/                   # Data loaders, curriculum sorting, clustering
+                │   ├── actdata/                # Activity recognition dataset utilities
+                │   ├── getcurriculumloader.py
+                │   ├── getdataloader_single.py
+                │   └── cluster.py              # Clustering logic for domain estimation
+                ├── loss/                       # Custom loss functions
+                │   └── common_loss.py
+                ├── network/                    # Model architectures
+                │   ├── act_network.py          # CNN for activity data
+                │   ├── Adver_network.py        # Adversarial components
+                │   └── common_network.py       # Base models
+                ├── utils/                      # Utility functions and argument parsing
+                │   ├── params.py
+                │   └── util.py
+                ├── shap_utils.py               # SHAP evaluation metrics
+                ├── train.py                    # Entry point for training
+                ├── env.yml                     # Conda environment spec
+                └── README.md                   # This file
 
 ## 📊 Supported Datasets
 
