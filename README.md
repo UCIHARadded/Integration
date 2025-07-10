@@ -1,8 +1,8 @@
-# 🔬 Integration Framework for Domain Generalization with GNNs, SHAP, and Curriculum Learning
+# 🔬 Integration Framework for Domain Generalization with Automated K, SHAP, and Curriculum Learning
 
 ## 🧠 Overview
 
-This repository provides an integrated framework for research in Domain Generalization (DG) using Graph Neural Networks (GNNs), SHAP-based interpretability, and Curriculum Learning strategies. It extends the DIVERSIFY architecture with automation of latent domain estimation, curriculum learning and SHAP evaluation tools. The framework supports continual learning setups, clustering-based domain estimation, and perturbation-based interpretability evaluation.
+This repository provides an integrated framework for research in Domain Generalization (DG) using Automated K estimation, SHAP-based interpretability, and Curriculum Learning strategies. It extends the DIVERSIFY architecture with automation of latent domain estimation, curriculum learning and SHAP evaluation tools. The framework supports continual learning setups, clustering-based domain estimation, and perturbation-based interpretability evaluation.
 
 ![image](https://github.com/user-attachments/assets/96b1a059-3d6a-40ae-a306-e4a9fa40644e)
 
