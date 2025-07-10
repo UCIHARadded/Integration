@@ -193,11 +193,11 @@ After training, use the same script with --eval flag (if implemented) or embed e
 
 Typical evaluation output includes:
 
-Metric	                   Description
-Flip Rate	Change in prediction after key feature masking
-AOPC	        Confidence drop curve area
-Coherence	Agreement across similar inputs
-Sparsity	Minimum features required to explain
+        Metric	                   Description
+        Flip Rate	Change in prediction after key feature masking
+        AOPC	        Confidence drop curve area
+        Coherence	Agreement across similar inputs
+        Sparsity	Minimum features required to explain
 
 ---
         
