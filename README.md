@@ -2,7 +2,9 @@
 
 ## 🧠 Overview
 
-This repository provides an integrated framework for research in Domain Generalization (DG) using Automated K estimation, SHAP-based interpretability, and Curriculum Learning strategies. It extends the DIVERSIFY architecture with automation of latent domain estimation, curriculum learning and SHAP evaluation tools. The framework supports continual learning setups, clustering-based domain estimation, and perturbation-based interpretability evaluation. This integration project, of using diversify algorithm on EMG dataset using the above strategies, is an extension of the paper OUT-OF-DISTRIBUTION REPRESENTATION LEARNING FOR TIME SERIES CLASSIFICATION at ICLR 2023.
+This repository provides an integrated framework for research in Domain Generalization (DG) using Automated K estimation, SHAP-based interpretability, and Curriculum Learning strategies. It extends the DIVERSIFY architecture with automation of latent domain estimation, curriculum learning and SHAP evaluation tools. The framework supports continual learning setups, clustering-based domain estimation, and perturbation-based interpretability evaluation. 
+
+This integration project, of using diversify algorithm on EMG dataset using the above strategies, is an extension of the paper OUT-OF-DISTRIBUTION REPRESENTATION LEARNING FOR TIME SERIES CLASSIFICATION at ICLR 2023.
 
 Link- https://paperswithcode.com/paper/generalized-representations-learning-for-time
 
