@@ -4,13 +4,30 @@
 
 This repository provides an integrated framework for research in Domain Generalization (DG) using Graph Neural Networks (GNNs), SHAP-based interpretability, and Curriculum Learning strategies. It extends the DIVERSIFY architecture with automation of latent domain estimation, curriculum learning and SHAP evaluation tools. The framework supports continual learning setups, clustering-based domain estimation, and perturbation-based interpretability evaluation.
 
+---
+
 ## 🚀 Core Pipelines
 
 ### 🔧 Training Pipeline
 
-The training phase includes data loading, clustering-based domain estimation, curriculum sorting, model training with an optional CNN backbone, and domain-specific optimization.
+Argument Parsing – Loads dataset, model, algorithm, and SHAP configurations via get_args().
+
+Dataset Preparation – Uses get_act_dataloader for EMG data loading with train-test splits.
+
+Network Construction – Initializes networks via ActNetwork or adversarial models.
+
+Curriculum Learning – Optionally reorders samples based on clustering difficulty (get_curriculum_loader).
+
+Optimization – Uses optimizers and loss functions defined in alg/opt.py and loss/common_loss.py.
+
+Training Loop – Iterates through epochs, records metrics, evaluates on validation sets.
+
+SHAP Analysis – Computes SHAP values to explain model decisions and integrates interpretability in training.
+
+Artifacts Saving – Saves models, SHAP explanations, and plots for analysis.
 
         train.py --> datautil/ --> alg/ --> loss/ --> network/
+        
 
 Training Pipeline Illustration:
 
@@ -32,10 +49,19 @@ Training Pipeline Illustration:
                             │ Save Trained     │
                             │ Weights & Logs   │
                             └──────────────────┘
+                            
 
 ### 📊 Evaluation Pipeline
 
-Evaluation supports test-time inference, SHAP-based explainability metrics (flip rate, coherence, AOPC), and generalization gap measurements across domains.
+Model Loading – Loads trained models from checkpoint directories.
+
+Test Dataset Preparation – Uses held-out test splits.
+
+Performance Evaluation – Computes metrics including accuracy, confusion matrices, silhouette score, Davies-Bouldin index.
+
+SHAP-based Analysis – Generates heatmaps, flip-rate, Jaccard similarity, and Kendall Tau correlations for interpretability.
+
+Results Saving – Outputs are saved as images (.png), numpy arrays, and printed summaries.
 
 Evaluation Pipeline Illustration:
 
@@ -57,17 +83,24 @@ Evaluation Pipeline Illustration:
 
 ## ✨ Key Features
 
+            ✅ Supports Diversify Algorithm for sample-level generalisation.
+                
             ✅ Automated Latent Domain Estimation using clustering.
         
             ✅ Curriculum Learning for sequential and staged domain training.
         
-            ✅ SHAP-based Evaluations: Flip Rate, AOPC, Coherence, Sparsity.
+            ✅ SHAP Explainability to visualise feature importance in time series.
         
             ✅ Cross-domain Testing with configurable datasets.
         
             ✅ Extensible Pipeline for novel DG/DA experiments.
-            
 
+            ✅ Evaluation metrics include Silhouette, Davies-Bouldin, Confusion Matrices.
+
+            ✅ Clean separation of data utilities, losses, algorithms, and network architectures.
+
+---
+            
 ## 📁 File Structure
 
                 Integration-main/
@@ -94,22 +127,28 @@ Evaluation Pipeline Illustration:
                 ├── env.yml                     # Conda environment spec
                 └── README.md                   # This file
 
+---
+
 ## 📊 Supported Datasets
 
 Currently supports activity recognition datasets, especially cross-subject and cross-location setups via:
 
     actdata/cross_people.py
 
-    EMG dataset (with preprocessing expected in CSV format)
+EMG dataset (with preprocessing expected in CSV format)
+
+Extendable to any time series dataset following the Dataset class templates.
 
 Direct Link- https://wjdcloud.blob.core.windows.net/dataset/diversity_emg.zip
+
+---
 
 ## ▶️ How to Run
 
 ### 📦 Setup
 
-conda env create -f env.yml
-conda activate diversify_env
+        conda env create -f env.yml
+        conda activate diversify_env
 
 ### Dataset download 
 
@@ -126,13 +165,13 @@ conda activate diversify_env
 ### 🏋️‍♂️ Training
 
 
-                python train.py --data_dir ./data/ --task cross_people --test_envs 0 --dataset emg --algorithm diversify --alpha1 1.0 --alpha 1.0 --lam 0.0 --local_epoch 3 --max_epoch 50 --lr 0.01 --output ./train_output --automated_k --curriculum --CL_PHASE_EPOCHS 20 --enable_shap
-                
-                python train.py --data_dir ./data/ --task cross_people --test_envs 1 --dataset emg --algorithm diversify --alpha1 0.1 --alpha 10.0 --lam 0.0 --local_epoch 2 --max_epoch 15 --lr 0.01 --output ./data/train_output1 --automated_k --curriculum --CL_PHASE_EPOCHS 10 --enable_shap
-                
-                python train.py --data_dir ./data/ --task cross_people --test_envs 2 --dataset emg --algorithm diversify --alpha1 0.5 --alpha 21.5 --lam 0.0 --local_epoch 1 --max_epoch 150 --lr 0.01 --output ./data/train_output2 --automated_k --curriculum --CL_PHASE_EPOCHS 2 --enable_shap
-                
-                python train.py --data_dir ./data/ --task cross_people --test_envs 3 --dataset emg --algorithm diversify --alpha1 5.0 --alpha 0.1 --lam 0.0 --local_epoch 5 --max_epoch 30 --lr 0.01 --output ./data/train_output3 --automated_k --curriculum --CL_PHASE_EPOCHS 5 --enable_shap
+        python train.py --data_dir ./data/ --task cross_people --test_envs 0 --dataset emg --algorithm diversify --alpha1 1.0 --alpha 1.0 --lam 0.0 --local_epoch 3 --max_epoch 50 --lr 0.01 --output ./train_output --automated_k --curriculum --CL_PHASE_EPOCHS 20 --enable_shap
+        
+        python train.py --data_dir ./data/ --task cross_people --test_envs 1 --dataset emg --algorithm diversify --alpha1 0.1 --alpha 10.0 --lam 0.0 --local_epoch 2 --max_epoch 15 --lr 0.01 --output ./data/train_output1 --automated_k --curriculum --CL_PHASE_EPOCHS 10 --enable_shap
+        
+        python train.py --data_dir ./data/ --task cross_people --test_envs 2 --dataset emg --algorithm diversify --alpha1 0.5 --alpha 21.5 --lam 0.0 --local_epoch 1 --max_epoch 150 --lr 0.01 --output ./data/train_output2 --automated_k --curriculum --CL_PHASE_EPOCHS 2 --enable_shap
+        
+        python train.py --data_dir ./data/ --task cross_people --test_envs 3 --dataset emg --algorithm diversify --alpha1 5.0 --alpha 0.1 --lam 0.0 --local_epoch 5 --max_epoch 30 --lr 0.01 --output ./data/train_output3 --automated_k --curriculum --CL_PHASE_EPOCHS 5 --enable_shap
 
 
 
@@ -140,22 +179,27 @@ conda activate diversify_env
 
 After training, use the same script with --eval flag (if implemented) or embed evaluation in train.py by enabling SHAP.
 
+---
 
 ## 📂 Outputs and Artifacts
 
-    ./checkpoints/: Trained model weights.
-
-    ./logs/: Training loss and accuracy logs.
-
-    ./results/: SHAP metrics, AOPC plots, domain generalization reports.
+        ./checkpoints/: Trained model weights.
+        
+        ./logs/: Training loss and accuracy logs.
+        
+        ./results/: SHAP metrics, AOPC plots, domain generalization reports, Confusion Matrices, Domain Cluster output for curriculum learning, Logs and Metrics stored in output folders defined within the script.
+    
 
 Typical evaluation output includes:
 
-                Metric	                   Description
-                Flip Rate	Change in prediction after key feature masking
-                AOPC	        Confidence drop curve area
-                Coherence	Agreement across similar inputs
-                Sparsity	Minimum features required to explain
+        Metric	                   Description
+        Flip Rate	Change in prediction after key feature masking
+        AOPC	        Confidence drop curve area
+        Coherence	Agreement across similar inputs
+        Sparsity	Minimum features required to explain
+
+---
+        
                 
 ## 🔍 In-depth Analysis
 
@@ -167,6 +211,8 @@ Typical evaluation output includes:
 
     Cross-Domain Testing: Evaluates generalization across unseen person IDs or locations.
 
+---
+
 ## 📜 License
 
 This project is free for academic and commercial use with attribution.
@@ -177,6 +223,8 @@ This project is free for academic and commercial use with attribution.
               year={2025},
               note={https://github.com/UCIHARadded/Integration}
             }
+
+---
 
 ## Contact
 
