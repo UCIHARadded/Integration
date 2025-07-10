@@ -33,7 +33,7 @@ Training Pipeline Illustration:
                             │ Weights & Logs   │
                             └──────────────────┘
 
-📊 Evaluation Pipeline
+### 📊 Evaluation Pipeline
 
 Evaluation supports test-time inference, SHAP-based explainability metrics (flip rate, coherence, AOPC), and generalization gap measurements across domains.
 
@@ -55,21 +55,20 @@ Evaluation Pipeline Illustration:
          │ Explanation Metrics│
          └────────────────────┘
 
-✨ Key Features
+## ✨ Key Features
 
-    ✅ Automated Latent Domain Estimation using clustering.
+            ✅ Automated Latent Domain Estimation using clustering.
+        
+            ✅ Curriculum Learning for sequential and staged domain training.
+        
+            ✅ SHAP-based Evaluations: Flip Rate, AOPC, Coherence, Sparsity.
+        
+            ✅ Cross-domain Testing with configurable datasets.
+        
+            ✅ Extensible Pipeline for novel DG/DA experiments.
+            
 
-    ✅ Curriculum Learning for sequential and staged domain training.
-
-    ✅ SHAP-based Evaluations: Flip Rate, AOPC, Coherence, Sparsity.
-
-    ✅ GNN Integration: Uses graph-based backbones like GCN.
-
-    ✅ Cross-domain Testing with configurable datasets.
-
-    ✅ Extensible Pipeline for novel DG/DA experiments.
-
-📁 File Structure
+## 📁 File Structure
 
 Integration-main/
 ├── alg/                        # Core domain generalization algorithms
@@ -95,35 +94,54 @@ Integration-main/
 ├── env.yml                     # Conda environment spec
 └── README.md                   # This file
 
-📊 Supported Datasets
+## 📊 Supported Datasets
 
 Currently supports activity recognition datasets, especially cross-subject and cross-location setups via:
 
     actdata/cross_people.py
 
-    UCI HAR and WESAD datasets (with preprocessing expected in CSV format)
+    EMG dataset (with preprocessing expected in CSV format)
 
-▶️ How to Run
-📦 Setup
+Direct Link- https://wjdcloud.blob.core.windows.net/dataset/diversity_emg.zip
+
+## ▶️ How to Run
+
+### 📦 Setup
 
 conda env create -f env.yml
 conda activate diversify_env
 
-🏋️‍♂️ Training
+### Dataset download 
 
-python train.py \
-  --data_dir ./data/ \
-  --task act \
-  --algorithm diversify \
-  --latent_domain_num 3 \
-  --max_epoch 20 \
-  --local_epoch 2 \
-  --enable_shap True
+        # Download the dataset
+        !wget https://wjdcloud.blob.core.windows.net/dataset/diversity_emg.zip
+        !unzip diversity_emg.zip && mv emg data/
+        
+        # Create necessary directories
+        !mkdir -p ./data/train_output/act/
+        
+        !mkdir -p ./data/emg
+        !mv emg/* ./data/emg
 
-🧪 Evaluation
+### 🏋️‍♂️ Training
+
+
+                python train.py --data_dir ./data/ --task cross_people --test_envs 0 --dataset emg --algorithm diversify --alpha1 1.0 --alpha 1.0 --lam 0.0 --local_epoch 3 --max_epoch 50 --lr 0.01 --output ./train_output --automated_k --curriculum --CL_PHASE_EPOCHS 20 --enable_shap
+                
+                python train.py --data_dir ./data/ --task cross_people --test_envs 1 --dataset emg --algorithm diversify --alpha1 0.1 --alpha 10.0 --lam 0.0 --local_epoch 2 --max_epoch 15 --lr 0.01 --output ./data/train_output1 --automated_k --curriculum --CL_PHASE_EPOCHS 10 --enable_shap
+                
+                python train.py --data_dir ./data/ --task cross_people --test_envs 2 --dataset emg --algorithm diversify --alpha1 0.5 --alpha 21.5 --lam 0.0 --local_epoch 1 --max_epoch 150 --lr 0.01 --output ./data/train_output2 --automated_k --curriculum --CL_PHASE_EPOCHS 2 --enable_shap
+                
+                python train.py --data_dir ./data/ --task cross_people --test_envs 3 --dataset emg --algorithm diversify --alpha1 5.0 --alpha 0.1 --lam 0.0 --local_epoch 5 --max_epoch 30 --lr 0.01 --output ./data/train_output3 --automated_k --curriculum --CL_PHASE_EPOCHS 5 --enable_shap
+
+
+
+### 🧪 Evaluation
 
 After training, use the same script with --eval flag (if implemented) or embed evaluation in train.py by enabling SHAP.
-📂 Outputs and Artifacts
+
+
+## 📂 Outputs and Artifacts
 
     ./checkpoints/: Trained model weights.
 
@@ -132,12 +150,14 @@ After training, use the same script with --eval flag (if implemented) or embed e
     ./results/: SHAP metrics, AOPC plots, domain generalization reports.
 
 Typical evaluation output includes:
-Metric	Description
-Flip Rate	Change in prediction after key feature masking
-AOPC	Confidence drop curve area
-Coherence	Agreement across similar inputs
-Sparsity	Minimum features required to explain
-🔍 In-depth Analysis
+
+                Metric	                   Description
+                Flip Rate	Change in prediction after key feature masking
+                AOPC	        Confidence drop curve area
+                Coherence	Agreement across similar inputs
+                Sparsity	Minimum features required to explain
+                
+## 🔍 In-depth Analysis
 
     Latent Domain Clustering: Uses KMeans-based latent splitting via datautil/cluster.py.
 
@@ -145,16 +165,19 @@ Sparsity	Minimum features required to explain
 
     SHAP Explanations: shap_utils.py implements post-hoc perturbation evaluations and ranking metrics.
 
-    GNN Support: Drop-in support via network/common_network.py using PyTorch Geometric-style layers.
-
     Cross-Domain Testing: Evaluates generalization across unseen person IDs or locations.
 
-📜 License
+## 📜 License
 
-This project is licensed under the MIT License.
+This project is free for academic and commercial use with attribution.
 
-MIT License
+            @misc{Integration2025,
+              title={Integration Framework for Domain Generalization with GNNs, SHAP, and Curriculum Learning},
+              author={Rishabh Gupta et al.},
+              year={2025},
+              note={https://github.com/UCIHARadded/Integration}
+            }
 
-Copyright (c) 2025
+## Contact
 
-Permission is hereby granted, free of charge, to any person obtaining a copy...
+E-mail- rishabhgupta8218@gmail.com
