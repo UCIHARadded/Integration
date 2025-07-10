@@ -4,6 +4,9 @@
 
 This repository provides an integrated framework for research in Domain Generalization (DG) using Graph Neural Networks (GNNs), SHAP-based interpretability, and Curriculum Learning strategies. It extends the DIVERSIFY architecture with automation of latent domain estimation, curriculum learning and SHAP evaluation tools. The framework supports continual learning setups, clustering-based domain estimation, and perturbation-based interpretability evaluation.
 
+![ChatGPT Image Jul 10, 2025, 03_58_46 PM](https://github.com/user-attachments/assets/3a232c1a-8b72-4208-aa0d-27c0e107ac72)
+
+
 ---
 
 ## 🚀 Core Pipelines
