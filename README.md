@@ -155,6 +155,10 @@ Direct Link- https://wjdcloud.blob.core.windows.net/dataset/diversity_emg.zip
         conda env create -f env.yml
         conda activate diversify_env
 
+### Install dependencies
+
+        pip install scikit-learn scipy numpy torch torchvision shap pandas matplotlib seaborn tqdm
+
 ### Dataset download 
 
         # Download the dataset
